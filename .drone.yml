@@ -22,7 +22,7 @@ steps:
   # biasanya diisi dengan running unit test, atau menjalankan docker run
   commands:
   - make run-test
-  
+
 # for build image docker
 - name : build
   image: plugins/docker
@@ -54,6 +54,7 @@ services:
     POSTGRES_PASSWORD: noobee
     POSTGRES_USER: noobee
     POSTGRES_DB: noobee
+
 
 # trigger drone saat ada event push pada branch master
 # kita bisa setup trigger dengan branch, atau event, atau branch dan event
