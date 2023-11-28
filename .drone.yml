@@ -27,6 +27,38 @@ steps:
   commands:
   - make run-test
 
+# for build image docker
+- name : build
+  # disini kita menggunakan plugins yaitu docker
+  image: plugins/docker
+  # settings docker
+  settings: 
+    # repo target pada docker registry
+    repo: ibnu19/nbid-intermediate-drone
+    # username dockerhub
+    username:
+      # kita akan ambil value-nya dari secret yang di setup pada drone
+      # secret ini seperti variable config
+      from_secret: docker_username
+    # password dockerhub
+    password:
+      # kita juga akan mengambil value password dari secret
+      from_secret: docker_password
+    
+    # setup tags dengan latest
+    tags: latest
+
+    # dockerfile yang digunakan
+    dockerfile: Multistage-Alpine-Dockerfile
+  when:
+    event:
+    - tag
+    - push
+  # depends pada step "tests"
+  # sehingga step ini akan di eksekusi setelah step "tests" selesai
+  depends_on:
+    - tests
+
 # untuk nge-running services database
 services:
   # membuat services databse dengan nama `db`
